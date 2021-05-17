@@ -10,6 +10,7 @@ const fs = require('fs');
 var cfg = JSON.parse(fs.readFileSync('config.json', 'utf-8'));
 
 
+// Bienvenida al script
 console.log(' _____   _____   _____         _____   _____   _____  '.magenta);
 console.log('|  _  \\ |_   _| |  _  \\       |  _  \\ /  _  \\ |_   _| '.magenta);
 console.log('| |_| |   | |   | |_| |       | |_| | | | | |   | |   '.magenta);
@@ -19,6 +20,7 @@ console.log('|_|       |_|   |_|  \\_\\      |_____/ \\_____/   |_|   '.magenta)
 console.log('');
 console.log('                              '.bgBlack + 'Creado por Chari69#1010'.white.bgCyan);
 console.log('------------------------------------------------------');
+
 
 // Ranura para testeos, esto da un poco igual.
 if (cfg.testmode.enabled === true) {

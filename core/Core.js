@@ -11,7 +11,7 @@ function iniciarClase(materia, url) {
 
     // Leer el archivo de configuracion
     const fs = require('fs');
-    var cfg = JSON.parse(fs.readFileSync('../config.json', 'utf-8'));
+    var cfg = JSON.parse(fs.readFileSync('config.json', 'utf-8'));
 
     if (cfg.debug.headless === true) {
         var headless = !process.argv.includes('-h');
@@ -60,7 +60,7 @@ function iniciarClase(materia, url) {
         await page.waitFor(2000);
         if (cfg.debug.screenshot === true) {
             var tiempo = Date.now();
-            await classroom.screenshot({ path: `../historial/${tiempo}.png` });
+            await classroom.screenshot({ path: `historial/${tiempo}.png` });
             console.log('[BOT] Mensaje de asistencia colocado. Se ha dejado una screenshot en la carpeta del programa para que puedas confirmar.'.green);
         } else {
             console.log('[BOT] Mensaje de asistencia colocado.'.green);
