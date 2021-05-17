@@ -3,7 +3,7 @@
 
 const schedule = require('node-schedule');
 const colors = require('colors');
-const { iniciarClase } = require('./forwork.js');
+const { iniciarClase } = require('./core/Core.js');
 
 // Leer el archivo de configuracion
 const fs = require('fs');
