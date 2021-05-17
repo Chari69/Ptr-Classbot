@@ -1,0 +1,18 @@
+{
+  "cuentaGoogle": {
+    "correo": "pon tu correo aca",
+    "contraseña": "pon tu contraseña aca"
+  },
+
+  "mensaje": "COLOCA ACA TU MENSAJE DE ASISTENCIA",
+
+  "debug": {
+    "screenshot": false,
+    "headless": true
+  },
+
+  "testmode": {
+    "enabled": false,
+    "url": ""
+  }
+}
