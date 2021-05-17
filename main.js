@@ -1,56 +1,64 @@
 // Copyright (c) ChariArch 2021. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for details.
 
-const puppeteer = require('puppeteer-extra');
-
-// Plugin de Puppeteer, es necesario para poder iniciar sesion en Google.
-const StealthPlugin = require('puppeteer-extra-plugin-stealth');
-puppeteer.use(StealthPlugin());
-const headless = !process.argv.includes('-h');
+const schedule = require('node-schedule');
+const colors = require('colors');
+const { iniciarClase } = require('./forwork.js');
 
 // Leer el archivo de configuracion
 const fs = require('fs');
 var cfg = JSON.parse(fs.readFileSync('config.json', 'utf-8'));
 
-// Inicia el navegador + puppeter (bot)
-puppeteer.launch({
-    headless: headless,
-    executablePath: 'C:\\Program Files\\Microsoft\\Edge\\Application\\msedge.exe'
-}).then(async browser => {
 
-    console.log('[BOT] Iniciando el navegador EDGE');
-    const page = await browser.newPage();
+console.log(' _____   _____   _____         _____   _____   _____  '.magenta);
+console.log('|  _  \\ |_   _| |  _  \\       |  _  \\ /  _  \\ |_   _| '.magenta);
+console.log('| |_| |   | |   | |_| |       | |_| | | | | |   | |   '.magenta);
+console.log('|  ___/   | |   |  _  /       |  _  { | | | |   | |   '.magenta);
+console.log('| |       | |   | | \\ \\       | |_| | | |_| |   | |   '.magenta);
+console.log('|_|       |_|   |_|  \\_\\      |_____/ \\_____/   |_|   '.magenta);
+console.log('');
+console.log('                              '.bgBlack + 'Creado por Chari69#1010'.white.bgCyan);
+console.log('------------------------------------------------------');
 
-    // Iniciar sesion en Google
-    console.log(`[BOT] Iniciando Sesion en Google (${cfg.cuentaGoogle.correo})`);
+// Ranura para testeos, esto da un poco igual.
+if (cfg.testmode.enabled === true) {
+    iniciarClase('PTR-TEST', cfg.testmode.url);
+};
 
-    await page.goto('https://accounts.google.com/signin/v2/identifier');
+// HORARIO DE CLASES (por orden)
+// Lunes a las 8:10 AM
+const id1 = schedule.scheduleJob({ hour: 8, minute: 10, dayOfWeek: 1 }, function () {
+    iniciarClase('MATEMATICAS', 'https://classroom.google.com/c/MzQwNzg0ODU0MjRa');
+});
 
-    await page.waitForSelector('#identifierId');
-    await page.type('#identifierId', cfg.cuentaGoogle.correo);
-    await page.click('#identifierNext');
+// Martes a las 8:10 AM
+const id2 = schedule.scheduleJob({ hour: 8, minute: 10, dayOfWeek: 2 }, function () {
+    iniciarClase('ORIENTACION', 'https://classroom.google.com/c/MTUwNjk5MjIyNjM3');
+});
 
-    await page.waitForSelector('#password input[type="password"]', { visible: true });
-    await page.type('#password input[type="password"]', cfg.cuentaGoogle.contraseña, { delay: 5 });
-    await page.click('#passwordNext');
+// Miercoles a las 8:10 AM
+const id3 = schedule.scheduleJob({ hour: 8, minute: 10, dayOfWeek: 3 }, function () {
+    iniciarClase('GHC', 'https://classroom.google.com/c/MTQ5NTUwMTQwMTMw');
+});
 
-    console.log('[BOT] Sesion de Google Iniciada.');
-    await page.waitFor(2000);
+// Miercoles a las 11:35 AM
+const id4 = schedule.scheduleJob({ hour: 11, minute: 35, dayOfWeek: 3 }, function () {
+    iniciarClase('QUIMICA', 'https://classroom.google.com/c/MTc2OTgzMTMzMDgx');
+});
 
-    // Colocar asistencia en Classroom
-    console.log('[BOT] Abriendo Classroom.');
-    const classroom = await browser.newPage();
-    await classroom.goto('https://classroom.google.com/c/MjgxMzMwNjI0OTU5', { waitUntil: 'networkidle0' });
+// Jueves a las 8:10 AM
+const id5 = schedule.scheduleJob({ hour: 8, minute: 10, dayOfWeek: 4 }, function () {
+    iniciarClase('CASTELLANO', 'https://classroom.google.com/c/MTQ5ODQ5NTE4NDEy');
+});
 
-    const asistencia = await classroom.$x('//*[@id=":1.t"]');
-    await asistencia[0].type(`${cfg.mensaje}`);
+// Jueves a las 11:35 AM
+const id6 = schedule.scheduleJob({ hour: 11, minute: 35, dayOfWeek: 4 }, function () {
+    iniciarClase('FISICA', 'https://classroom.google.com/c/OTExNTIyNDc3NzJa');
+});
 
-    await classroom.keyboard.press('Tab');
-    await classroom.keyboard.press('Enter');
-
-    // Tomar screenshot de la asistencia (historial) (WIP)
-    await page.screenshot({ path: 'example.png' });
-    console.log('[BOT] Mensaje de asistencia colocado. Se ha dejado una screenshot en la carpeta del programa para que puedas confirmar.');
+// Viernes a las 8:05 AM
+const id7 = schedule.scheduleJob({ hour: 8, minute: 5, dayOfWeek: 5 }, function () {
+    iniciarClase('BIOLOGIA', 'https://classroom.google.com/c/MTQ1NDgyOTUyOTIw');
 });
 
 process.on('unhandledRejection', (err, p) => { }); // No mas errores pajuos
