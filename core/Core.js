@@ -4,6 +4,7 @@
 function iniciarClase(materia, url) {
     const puppeteer = require('puppeteer-extra');
     const colors = require('colors');
+    const { getEdgePath } = require('edge-paths');
 
     // Plugin de Puppeteer, es necesario para poder iniciar sesion en Google.
     const StealthPlugin = require('puppeteer-extra-plugin-stealth');
@@ -22,7 +23,7 @@ function iniciarClase(materia, url) {
     // Inicia el navegador + puppeter (bot)
     puppeteer.launch({
         headless: headless,
-        executablePath: 'C:\\Program Files\\Microsoft\\Edge\\Application\\msedge.exe'
+        executablePath: getEdgePath()
     }).then(async browser => {
 
         console.log(`[${materia}] Clase iniciada!`.green);
