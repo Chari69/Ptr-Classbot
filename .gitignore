@@ -2,6 +2,5 @@
 
 package-lock.json
 config.json
-build.bat
 
-/historial/*
+/historial/*.png
